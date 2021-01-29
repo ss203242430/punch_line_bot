@@ -23,8 +23,10 @@ from applications import views
 from applications import api as custom_statement_view
 
 urlpatterns = [
+    path('', admin.site.urls),
     path('admin/', admin.site.urls),
     path('api/test', custom_statement_view.Custom_Statement_View.as_view()),
     url('^callback', views.callback),
-    static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
