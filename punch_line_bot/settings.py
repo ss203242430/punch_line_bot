@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,10 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '+zy#mhim_y#8c$15==ra=ob$k0w@+achzg!b&mv=-!*9ps5vy3'
 
+# Line Bot Key
+LINE_CHANNEL_ACCESS_TOKEN = '9dKQXfgp6ldLxLPIFe0m+cjHGDvMBahzg7GSiHQBryocpUqITlQaq/2kWPwA8/5u9pWzh4+Q/SRR2v6z1I6fl3lLV7nCabVvV2CZfdT6Ct/KaD8x8USX4+32j/9PjvH6ddiYRM5pZjTmd4D/2ZM5SAdB04t89/1O/w1cDnyilFU='
+LINE_CHANNEL_SECRET = '9f8ccc874668ae20126655d570baaf25'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
+    'applications',
 ]
 
 MIDDLEWARE = [
@@ -103,9 +110,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hant'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Taipei'
 
 USE_I18N = True
 
@@ -118,3 +125,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+CRONJOBS = [
+    ('*/5 * * * *', 'punchserver.cron.Npc_attack_cat_monster')
+]
