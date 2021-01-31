@@ -24,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '+zy#mhim_y#8c$15==ra=ob$k0w@+achzg!b&mv=-!*9ps5vy3'
 
 # Line Bot Key
-LINE_CHANNEL_ACCESS_TOKEN = 'eVHdGh0gOTARa6uEJBpNj6aKc+w3bpBrax8iCluOa6c4wr8iN4pcQMq92BenMnQULKWoM+cNM4FjKkw6RRe2QKNgMDdeR54RXIM3Yr6VUUA9HX2Jy6UWr5KlsJEuGdbsL/fMBsogTp0MLx0+uuqymwdB04t89/1O/w1cDnyilFU='
-LINE_CHANNEL_SECRET = '9869d7018dfdbd5b4172693b35f653d2'
+LINE_CHANNEL_ACCESS_TOKEN = '9dKQXfgp6ldLxLPIFe0m+cjHGDvMBahzg7GSiHQBryocpUqITlQaq/2kWPwA8/5u9pWzh4+Q/SRR2v6z1I6fl3lLV7nCabVvV2CZfdT6Ct/KaD8x8USX4+32j/9PjvH6ddiYRM5pZjTmd4D/2ZM5SAdB04t89/1O/w1cDnyilFU='
+LINE_CHANNEL_SECRET = '9f8ccc874668ae20126655d570baaf25'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
