@@ -8,6 +8,7 @@
 * Sublime Text3 (https://www.sublimetext.com/)
 
 ## 執行方法
+### 測試
 * 網站伺服器
 1. 打開cmd並進入專案資料夾
 2. 輸入指令```python manage.py runserver```
@@ -18,14 +19,24 @@
 2. 輸入指令```ngrok.exe http 8000```
 3. 進入LINE Developers，選擇LINE Bot並將Webhook URL設定成https://{ngrok提供的隨機碼}.ngrok.io/callback
 
+### 正式
+* 網站伺服器
+1. uwsgi指令
+* 啟動：```uwsgi --ini uwsgi.ini```
+* 重啟：```uwsgi --reload uwsgi.pid```
+* 停止：```uwsgi --stop uwsgi.pid```
+
+### 進入資料庫cli
+* ```python manage.py dbshell```
+
 ## 專案目錄簡易說明
 + ```manage.py``` ----> 管理Django專案的命令列工具
 + ```linebotserver/``` ----> 包含重要的設定檔案，如settings.py、urls.py
-+ ```punchserver/``` ----> 包含大部分應用程式的程式檔
-+ ```punchserver/admin.py``` ----> 註冊後台顯示資料表
-+ ```punchserver/api.py``` ----> API定義
-+ ```punchserver/cron.py``` ----> 排程定義
-+ ```punchserver/models.py``` ----> 資料庫models定義
-+ ```punchserver/test.py``` ----> 測試程式
-+ ```punchserver/views.py``` ----> 接收LINE BOT的請求及回應訊息
++ ```applications/``` ----> 包含大部分應用程式的程式檔
++ ```applications/admin.py``` ----> 註冊後台顯示資料表
++ ```applications/api.py``` ----> API定義
++ ```applications/cron.py``` ----> 排程定義
++ ```applications/models.py``` ----> 資料庫models定義
++ ```applications/test.py``` ----> 測試程式
++ ```applications/views.py``` ----> 接收LINE BOT的請求及回應訊息
 + ```static/``` ----> 對外公開的檔案 (例如圖片檔)
