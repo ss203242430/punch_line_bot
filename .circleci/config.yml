@@ -13,8 +13,8 @@ jobs:
       - python/save-cache
       - run:
           command: python ./manage.py makemigrations
-          command: python ./manage.py migrate
-          command: python ./manage.py test
+                   python ./manage.py migrate
+                   python ./manage.py test
           name: Test
 
 workflows:
