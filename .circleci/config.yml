@@ -12,7 +12,10 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run:
-          command: python ./manage.py test
+          command: |
+            python ./manage.py makemigrations
+            python ./manage.py migrate
+            python ./manage.py test
           name: Test
 
 workflows:
