@@ -1,6 +1,32 @@
 import matplotlib.pyplot as plt 
 import datetime
 
+# domain = 'pieta.myddns.me:3001'
+domain = 'a65f347694a2.ngrok.io'
+
+def learn_punch_report_plot(learn_punch_list):
+    x = []
+    x_label = []
+    y = []
+
+    count = 0
+    for learn_punch in learn_punch_list:
+        count += 1
+        x.append(count)
+        date = learn_punch.clock_in.strftime("%Y%m%d")
+        x_label.append(date)
+        total_seconds = (learn_punch.clock_out - learn_punch.clock_in).total_seconds()
+        y.append(total_seconds)
+
+    plt.plot(x, y, marker="o")
+    plt.xticks(x, x_label)
+    now = datetime.datetime.now()
+    timestamp = datetime.datetime.timestamp(now)
+    plt.savefig(f'static/plot/temp/learn_punch_report_{timestamp}.png')
+    plt.close()
+    plt_img_url = f'https://{domain}/static/plot/temp/learn_punch_report_{timestamp}.png'
+    return plt_img_url
+
 def learn_punch_week_report_plot(learn_punch_list, week_start):
     week_day = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'] 
 
@@ -42,6 +68,5 @@ def learn_punch_week_report_plot(learn_punch_list, week_start):
     timestamp = datetime.datetime.timestamp(now)
     plt.savefig(f'static/plot/temp/learn_punch_week_report_{timestamp}.png')
     plt.close()
-    domain = 'pieta.myddns.me:3001'
     plt_img_url = f'https://{domain}/static/plot/temp/learn_punch_week_report_{timestamp}.png'
     return plt_img_url

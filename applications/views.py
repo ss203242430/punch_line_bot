@@ -103,7 +103,7 @@ def callback(request):
                         key_word_list = [
                             '貓貓怪', '傷害統計', '建立會員資料', '人生啊', '建立自訂語句', '刪除自訂語句',
                             '攻擊貓貓怪', '貓貓點數查詢', '學習打卡', '打卡記錄查詢', '打卡記錄週查詢', '喵', '貓',
-                            '打卡記錄週報表', '下注'
+                            '打卡記錄報表', '打卡記錄週報表', '下注'
                         ]
                         for custom_statement_type in custom_statement_types:
                             key_word_list.append(custom_statement_type[0])
@@ -221,6 +221,22 @@ def callback(request):
                                     elif len(mtext_split) == 2:
                                         page = mtext_split[1]
                                         message.append(learn_punch_week_flex(user.id, int(page)))
+                                else:
+                                    response_msg = '尚未擁有打卡紀錄'
+                                    message.append(TextSendMessage(text=response_msg))
+                            elif '打卡記錄報表' in mtext:
+                                if Learn_Punch.objects.filter(user_id=user.id).exists():
+                                    mtext_split = mtext.split(',')
+                                    if len(mtext_split) > 2:
+                                        if mtext_split[1] == '標題':
+                                            title = mtext_split[2]
+                                            msg, plt = learn_punch_report_flex(user.id, title=title)
+                                            message.append(msg)
+                                            if plt:
+                                                message.append(plt)
+                                    else:
+                                        response_msg = '請輸入正確格式\n打卡記錄報表,{標題},{參數}'
+                                        message.append(TextSendMessage(text=response_msg))
                                 else:
                                     response_msg = '尚未擁有打卡紀錄'
                                     message.append(TextSendMessage(text=response_msg))
