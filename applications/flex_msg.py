@@ -154,6 +154,27 @@ def learn_punch_time_flex(user_id, start_time, end_time):
     message = FlexSendMessage(alt_text='打卡記錄查詢', contents=content)
     return message
 
+def learn_punch_report_flex(user_id, title=None):
+    if title:
+        learn_punch_list = Learn_Punch.objects.filter(user_id=user_id, title=title)
+    if not learn_punch_list:
+        response_msg = '查無打卡紀錄'
+        message = TextSendMessage(text=response_msg)
+        return message, None
+    total_time = datetime.timedelta()
+    tz = pytz.timezone('Asia/Taipei')
+    for learn_punch in learn_punch_list:
+        clock_in = learn_punch.clock_in.astimezone(tz)
+        clock_out = learn_punch.clock_out
+        if clock_out is not None:
+            total_time += clock_out - clock_in
+    total_time = str(total_time).split('.')[0]
+    result_msg = f'總學習時間: {total_time}'
+    message = TextSendMessage(text=result_msg)
+    plt_img_url = learn_punch_report_plot(learn_punch_list)
+    plt_message = ImageSendMessage(original_content_url=plt_img_url, preview_image_url=plt_img_url)
+    return message, plt_message
+
 def learn_punch_week_report_flex(user_id, weeks_ago):
     week_start, week_end = get_week_start_end()
     learn_punch_list = Learn_Punch.objects.filter(user_id=user_id, clock_in__range=[week_start, week_end])
