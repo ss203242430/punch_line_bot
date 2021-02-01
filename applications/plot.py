@@ -1,8 +1,7 @@
 import matplotlib.pyplot as plt 
 import datetime
 
-# domain = 'pieta.myddns.me:3001'
-domain = 'a65f347694a2.ngrok.io'
+domain = 'pieta.myddns.me:3001'
 
 def learn_punch_report_plot(learn_punch_list):
     x = []
@@ -11,12 +10,13 @@ def learn_punch_report_plot(learn_punch_list):
 
     count = 0
     for learn_punch in learn_punch_list:
-        count += 1
-        x.append(count)
-        date = learn_punch.clock_in.strftime("%Y%m%d")
-        x_label.append(date)
-        total_seconds = (learn_punch.clock_out - learn_punch.clock_in).total_seconds()
-        y.append(total_seconds)
+        if learn_punch.clock_out:
+            count += 1
+            x.append(count)
+            date = learn_punch.clock_in.strftime("%Y%m%d")
+            x_label.append(date)
+            total_seconds = (learn_punch.clock_out - learn_punch.clock_in).total_seconds()
+            y.append(total_seconds)
 
     plt.plot(x, y, marker="o")
     plt.xticks(x, x_label)
