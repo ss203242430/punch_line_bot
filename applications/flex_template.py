@@ -1,5 +1,5 @@
 def cat_monster_flex_template(hp_percent, description):
-		return {
+    return {
       "type": "carousel",
       "contents": [
         {
@@ -85,7 +85,7 @@ def cat_monster_flex_template(hp_percent, description):
     }
 
 def damage_statistics_flex_template():
-		return {
+    return {
       "type": "carousel",
       "contents": [
         {
@@ -111,42 +111,42 @@ def damage_statistics_flex_template():
 
 
 def npc_info_flex_template(npc_id, item, damage_percentage):
-		return {
-	    "type": "text",
-	    "text": str(npc_id) + ': ' + item['name'] + ' 造成 ' + str(item['damage']) + ' 傷害，佔 ' + \
+    return {
+      "type": "text",
+      "text": str(npc_id) + ': ' + item['name'] + ' 造成 ' + str(item['damage']) + ' 傷害，佔 ' + \
         str(damage_percentage) + ' %',
-	    "color": "#ffffff",
-	    "align": "start",
-	    "size": "xs",
-	    "gravity": "center",
-	    "margin": "lg"
-	  }
+      "color": "#ffffff",
+      "align": "start",
+      "size": "xs",
+      "gravity": "center",
+      "margin": "lg"
+    }
 
 def damage_bar_graph_flex_template(damage_percentage):
-		return {
-	    "type": "box",
-	    "layout": "vertical",
-	    "contents": [
-	      {
-	        "type": "box",
-	        "layout": "vertical",
-	        "contents": [
-	          {
-	            "type": "filler"
-	          }
-	        ],
-	        "width": f"{damage_percentage}%",
-	        "backgroundColor": "#0D8186",
-	        "height": "6px"
-	      }
-	    ],
-	    "backgroundColor": "#9FD8E36E",
-	    "height": "6px",
-	    "margin": "sm"
-	  }
+    return {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            {
+              "type": "filler"
+            }
+          ],
+          "width": f"{damage_percentage}%",
+          "backgroundColor": "#0D8186",
+          "height": "6px"
+        }
+      ],
+      "backgroundColor": "#9FD8E36E",
+      "height": "6px",
+      "margin": "sm"
+    }
 
 def learn_punch_flex_template(title, description, total_time, clock_in_str, clock_out_str):
-		return {
+    return {
       "type": "bubble",
       "size": "kilo",
       "header": {

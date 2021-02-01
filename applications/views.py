@@ -197,14 +197,18 @@ def callback(request):
                                         message.append(learn_punch_flex(user.id, 1))
                                     elif len(mtext_split) > 2:
                                         if mtext_split[1] == '數量':
-                                            message.append(learn_punch_flex(user.id, int(mtext_split[2])))
+                                            quantity = int(mtext_split[2])
+                                            message.append(learn_punch_flex(user.id, quantity=quantity))
                                         elif mtext_split[1] == '時間':
                                             time_split = mtext_split[2].split('~')
                                             start_time = time_split[0]
                                             end_time = time_split[1]
                                             message.append(learn_punch_time_flex(user.id, start_time, end_time))
+                                        elif mtext_split[1] == '標題':
+                                            title = mtext_split[2]
+                                            message.append(learn_punch_flex(user.id, title=title))
                                     else:
-                                        response_msg = '請輸入正確格式\n打卡記錄查詢,{數量 or 時間},{參數}'
+                                        response_msg = '請輸入正確格式\n打卡記錄查詢,{數量 or 時間 or 標題},{參數}'
                                         message.append(TextSendMessage(text=response_msg))
                                 else:
                                     response_msg = '尚未擁有打卡紀錄'
