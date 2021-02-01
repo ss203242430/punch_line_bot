@@ -5,7 +5,7 @@ domain = 'pieta.myddns.me:3001'
 
 def learn_punch_report_plot(learn_punch_list):
     x = []
-    x_label = []
+    x_ticks = []
     y = []
 
     count = 0
@@ -14,16 +14,19 @@ def learn_punch_report_plot(learn_punch_list):
             count += 1
             x.append(count)
             date = learn_punch.clock_in.strftime("%Y%m%d")
-            x_label.append(date)
+            x_ticks.append(date)
             total_seconds = (learn_punch.clock_out - learn_punch.clock_in).total_seconds()
-            y.append(total_seconds)
+            total_minutes = total_seconds / 60
+            y.append(total_minutes)
     if count > 6:
-        for index, element in enumerate(x_label):
-            if index > 0 and index < len(x_label) - 1:
-                x_label[index] = ''
+        for index, element in enumerate(x_ticks):
+            if index > 0 and index < len(x_ticks) - 1:
+                x_ticks[index] = ''
 
     plt.plot(x, y, marker="o")
-    plt.xticks(x, x_label)
+    plt.xticks(x, x_ticks)
+    plt.xlabel('Date')
+    plt.ylabel('Minutes')
     now = datetime.datetime.now()
     timestamp = datetime.datetime.timestamp(now)
     plt.savefig(f'static/plot/temp/learn_punch_report_{timestamp}.png')
@@ -58,16 +61,18 @@ def learn_punch_week_report_plot(learn_punch_list, week_start):
         if learn_punch.clock_out:
             result[week_day[week_day_index]] += learn_punch.clock_out - learn_punch.clock_in
 
-    y.append(result['MON'].total_seconds())
-    y.append(result['TUE'].total_seconds())
-    y.append(result['WED'].total_seconds())
-    y.append(result['THU'].total_seconds())
-    y.append(result['FRI'].total_seconds())
-    y.append(result['SAT'].total_seconds())
-    y.append(result['SUN'].total_seconds())
+    y.append(result['MON'].total_seconds() / 60)
+    y.append(result['TUE'].total_seconds() / 60)
+    y.append(result['WED'].total_seconds() / 60)
+    y.append(result['THU'].total_seconds() / 60)
+    y.append(result['FRI'].total_seconds() / 60)
+    y.append(result['SAT'].total_seconds() / 60)
+    y.append(result['SUN'].total_seconds() / 60)
 
     plt.plot(x, y, marker="o")
     plt.xticks(x, week_day)
+    plt.xlabel('Week day')
+    plt.ylabel('Minutes')
     now = datetime.datetime.now()
     timestamp = datetime.datetime.timestamp(now)
     plt.savefig(f'static/plot/temp/learn_punch_week_report_{timestamp}.png')
