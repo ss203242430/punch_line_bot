@@ -17,6 +17,8 @@ def learn_punch_report_plot(learn_punch_list):
             x_label.append(date)
             total_seconds = (learn_punch.clock_out - learn_punch.clock_in).total_seconds()
             y.append(total_seconds)
+    if count > 6:
+        x_label[1:-1] = ''
 
     plt.plot(x, y, marker="o")
     plt.xticks(x, x_label)
