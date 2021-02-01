@@ -11,6 +11,8 @@ import pytz
 import datetime
 from datetime import timedelta
 
+flex_max_quantity = 12 # flex_msg一次最多顯示數量上限
+
 def cat_monster_flex(cat_monster_id):
     data = Cat_Monster.objects.get(id=cat_monster_id)
     max_hp = data.max_hp
@@ -54,13 +56,18 @@ def damage_statistics_flex():
     message = FlexSendMessage(alt_text='傷害統計', contents=content)
     return message
 
-def learn_punch_flex(user_id, times):
+def learn_punch_flex(user_id, quantity=None, title=None):
     content = {
         "type": "carousel",
         "contents": []
     }
     tz = pytz.timezone('Asia/Taipei')
-    learn_punch_list = Learn_Punch.objects.filter(user_id=user_id).order_by('-id')[:times]
+    if quantity:
+        if quantity > flex_max_quantity:
+            quantity = flex_max_quantity
+        learn_punch_list = Learn_Punch.objects.filter(user_id=user_id).order_by('-id')[:quantity]
+    elif title:
+        learn_punch_list = Learn_Punch.objects.filter(user_id=user_id, title=title)[:flex_max_quantity]
     for learn_punch in learn_punch_list:
         title = learn_punch.title
         description = learn_punch.description
@@ -92,7 +99,7 @@ def learn_punch_week_flex(user_id, page):
         message = TextSendMessage(text=response_msg)
         return message
     tz = pytz.timezone('Asia/Taipei')
-    learn_punch_list = learn_punch_list[12 * (page - 1) : 12 * page]
+    learn_punch_list = learn_punch_list[flex_max_quantity * (page - 1) : flex_max_quantity * page]
     for learn_punch in learn_punch_list:
         title = learn_punch.title
         description = learn_punch.description
@@ -127,7 +134,7 @@ def learn_punch_time_flex(user_id, start_time, end_time):
         response_msg = '查無打卡紀錄'
         message = TextSendMessage(text=response_msg)
         return message
-    learn_punch_list = learn_punch_list[:12]
+    learn_punch_list = learn_punch_list[:flex_max_quantity]
     for learn_punch in learn_punch_list:
         title = learn_punch.title
         description = learn_punch.description
