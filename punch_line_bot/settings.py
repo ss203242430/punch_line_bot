@@ -128,5 +128,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 CRONJOBS = [
-    ('*/5 * * * *', 'applications.crontab.npc_attack_cat_monster')
+    ('*/5 * * * *', 'applications.cron.npc_attack_cat_monster')
 ]
