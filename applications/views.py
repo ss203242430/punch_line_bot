@@ -84,9 +84,23 @@ def callback(request):
                             message.append(TextSendMessage(text=response_msg))
                     elif mtext[:6] == '刪除自訂語句':
                         mtext_split = mtext.split(',')
-                        if len(mtext_split) < 3:
+                        if len(mtext_split) < 2:
                             response_msg = '請輸入正確格式\n刪除自訂語句,{關鍵字},{回覆語句}'
                             message.append(TextSendMessage(text=response_msg))
+                        elif len(mtext_split) == 2:
+                            custom_statement = Custom_Statement.objects.filter(
+                                _type=mtext_split[1],
+                            )
+                            if len(custom_statement) == 1:
+                                custom_statement.delete()
+                                response_msg = '刪除自訂語句成功'
+                                message.append(TextSendMessage(text=response_msg))
+                            elif len(custom_statement) > 1:
+                                response_msg = '請輸入要刪除的回覆語句\n刪除自訂語句,{關鍵字},{回覆語句}'
+                                message.append(TextSendMessage(text=response_msg))
+                            else:
+                                response_msg = '查無此自訂語句'
+                                message.append(TextSendMessage(text=response_msg))
                         else:
                             custom_statement = Custom_Statement.objects.filter(
                                 _type=mtext_split[1],
