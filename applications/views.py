@@ -137,7 +137,11 @@ def callback(request):
                             elif mtext[:2] == '下注':
                                 mtext_split = mtext.split(',')
                                 if len(mtext_split) == 3:
-                                    if Betting.objects.filter(user_id=user.id).exists():
+                                    cat_monster = Cat_Monster.objects.get(id=1)
+                                    if cat_monster.current_hp < cat_monster.max_hp / 2:
+                                        response_msg = '貓貓怪血量已小於一半，無法進行下注'
+                                        message.append(TextSendMessage(text=response_msg))
+                                    elif Betting.objects.filter(user_id=user.id).exists():
                                         response_msg = '已下注，無法再次下注'
                                         message.append(TextSendMessage(text=response_msg))
                                     else:
