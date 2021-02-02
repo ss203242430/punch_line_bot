@@ -14,7 +14,7 @@ def npc_attack_cat_monster():
             'damage': 0
         }
     cat_monster = Cat_Monster.objects.get(id=1)
-    npc_list = Npc.objects.all()
+    npc_list = list(Npc.objects.all())
     random.shuffle(npc_list)
     for npc in npc_list:
         if npc.id == last_place['npc_id']:
