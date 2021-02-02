@@ -35,7 +35,7 @@
 + ```applications/``` ----> 包含大部分應用程式的程式檔
 + ```applications/admin.py``` ----> 註冊後台顯示資料表
 + ```applications/api.py``` ----> API定義
-+ ```applications/cron.py``` ----> 排程定義
++ ```applications/crontab.py``` ----> 排程定義
 + ```applications/models.py``` ----> 資料庫models定義
 + ```applications/test.py``` ----> 測試程式
 + ```applications/views.py``` ----> 接收LINE BOT的請求及回應訊息
