@@ -70,7 +70,7 @@ def callback(request):
                             message.append(TextSendMessage(text=response_msg))
                     elif mtext == '人生啊':
                         message = StickerSendMessage(package_id=11538, sticker_id=51626522)
-                    elif '建立自訂語句' in mtext:
+                    elif mtext[:6] == '建立自訂語句':
                         mtext_split = mtext.split(',')
                         if len(mtext_split) < 3:
                             response_msg = '請輸入正確格式\n建立自訂語句,{關鍵字},{回覆語句}'
@@ -82,7 +82,7 @@ def callback(request):
                             )
                             response_msg = '建立自訂語句成功'
                             message.append(TextSendMessage(text=response_msg))
-                    elif '刪除自訂語句' in mtext:
+                    elif mtext[:6] == '刪除自訂語句':
                         mtext_split = mtext.split(',')
                         if len(mtext_split) < 3:
                             response_msg = '請輸入正確格式\n刪除自訂語句,{關鍵字},{回覆語句}'
@@ -134,7 +134,7 @@ def callback(request):
                             elif mtext == '貓貓點數查詢':
                                 response_msg = f'貓貓點數: {user.point}'
                                 message.append(TextSendMessage(text=response_msg))
-                            elif '下注' in mtext:
+                            elif mtext[:2] == '下注':
                                 mtext_split = mtext.split(',')
                                 if len(mtext_split) == 3:
                                     if Betting.objects.filter(user_id=user.id).exists():
@@ -156,7 +156,7 @@ def callback(request):
                                 else:
                                     response_msg = '請輸入正確格式\n下注,{貓貓點數},{NPC_id}'
                                     message.append(TextSendMessage(text=response_msg))
-                            elif '學習打卡' in mtext:
+                            elif mtext[:4] == '學習打卡':
                                 new_punch_flag = False
                                 if Learn_Punch.objects.filter(user_id=user.id).exists():
                                     last_learn_punch = Learn_Punch.objects.filter(user_id=user.id).order_by('-id')[0]
@@ -190,7 +190,7 @@ def callback(request):
                                                 description=mtext_split[2]
                                             )
                                             message.append(learn_punch_flex(user.id, 1))
-                            elif '打卡記錄查詢' in mtext:
+                            elif mtext[:6] == '打卡記錄查詢':
                                 if Learn_Punch.objects.filter(user_id=user.id).exists():
                                     mtext_split = mtext.split(',')
                                     if len(mtext_split) == 1:
@@ -213,7 +213,7 @@ def callback(request):
                                 else:
                                     response_msg = '尚未擁有打卡紀錄'
                                     message.append(TextSendMessage(text=response_msg))
-                            elif '打卡記錄週查詢' in mtext:
+                            elif mtext[:7] == '打卡記錄週查詢':
                                 if Learn_Punch.objects.filter(user_id=user.id).exists():
                                     mtext_split = mtext.split(',')
                                     if len(mtext_split) == 1:
@@ -224,7 +224,7 @@ def callback(request):
                                 else:
                                     response_msg = '尚未擁有打卡紀錄'
                                     message.append(TextSendMessage(text=response_msg))
-                            elif '打卡記錄報表' in mtext:
+                            elif mtext[:6] == '打卡記錄報表':
                                 if Learn_Punch.objects.filter(user_id=user.id).exists():
                                     mtext_split = mtext.split(',')
                                     if len(mtext_split) > 2:
@@ -240,7 +240,7 @@ def callback(request):
                                 else:
                                     response_msg = '尚未擁有打卡紀錄'
                                     message.append(TextSendMessage(text=response_msg))
-                            elif '打卡記錄週報表' in mtext:
+                            elif mtext[:7] == '打卡記錄週報表':
                                 if Learn_Punch.objects.filter(user_id=user.id).exists():
                                     mtext_split = mtext.split(',')
                                     if len(mtext_split) == 1:
@@ -258,10 +258,10 @@ def callback(request):
                                     response_msg = '尚未擁有打卡紀錄'
                                     message.append(TextSendMessage(text=response_msg))
                         else:
-                            if mtext == '攻擊貓貓怪' or mtext == '貓貓點數查詢' or '學習打卡' in mtext or \
-                                '打卡記錄查詢' in mtext or '打卡記錄週查詢' in mtext or '打卡記錄週報表' in mtext or \
-                                '下注' in mtext:
-                                response_msg = '請先建立會員資料'
+                            if mtext == '攻擊貓貓怪' or mtext == '貓貓點數查詢' or mtext[:2] == '下注' or mtext[:4] == '學習打卡' or\
+                                mtext[:6] == '打卡記錄查詢' or mtext[:7] == '打卡記錄週查詢' or mtext[:6] == '打卡記錄報表' or \
+                                mtext[:7] == '打卡記錄週報表':
+                                response_msg = '請先輸入「建立會員資料」'
                                 message.append(TextSendMessage(text=response_msg))
 
                     if message:
