@@ -34,33 +34,34 @@ def npc_attack_cat_monster():
             damage_statistics.save()
         else:
             Damage_Statistics.objects.create(source_id=npc.id, source_type='npc', cat_monster_id=1, damage=damage)
-        if cat_monster.current_hp == 0:
-            damage_statistics_list = Damage_Statistics.objects.all()
-            champion = {
-                'source_id': damage_statistics_list[0].source_id,
-                'damage': damage_statistics_list[0].damage
-            }
-            for damage_statistics in damage_statistics_list:
-                if champion['damage'] < damage_statistics.damage:
+            
+    if cat_monster.current_hp == 0:
+        damage_statistics_list = Damage_Statistics.objects.all()
+        champion = {
+            'source_id': damage_statistics_list[0].source_id,
+            'damage': damage_statistics_list[0].damage
+        }
+        for damage_statistics in damage_statistics_list:
+            if champion['damage'] < damage_statistics.damage:
+                champion = {
+                    'source_id': damage_statistics.source_id,
+                    'damage': damage_statistics.damage
+                }
+            elif champion['damage'] == damage_statistics.damage:
+                random_number = random.randint(0, 1)
+                if random_number == 1:
                     champion = {
                         'source_id': damage_statistics.source_id,
                         'damage': damage_statistics.damage
                     }
-                elif champion['damage'] == damage_statistics.damage:
-                    random_number = random.randint(0, 1)
-                    if random_number == 1:
-                        champion = {
-                            'source_id': damage_statistics.source_id,
-                            'damage': damage_statistics.damage
-                        }
-            damage_statistics_list.delete()
-            bettings = Betting.objects.all()
-            for betting in bettings:
-                if betting.npc_id == champion['source_id']:
-                    user = User.objects.get(id=betting.user_id)
-                    user.point += betting.point * 10
-                    user.save()
-            bettings.delete()
-            cat_monster = Cat_Monster.objects.get(id=1)
-            cat_monster.current_hp = cat_monster.max_hp
-            cat_monster.save()
+        damage_statistics_list.delete()
+        bettings = Betting.objects.all()
+        for betting in bettings:
+            if betting.npc_id == champion['source_id']:
+                user = User.objects.get(id=betting.user_id)
+                user.point += betting.point * 10
+                user.save()
+        bettings.delete()
+        cat_monster = Cat_Monster.objects.get(id=1)
+        cat_monster.current_hp = cat_monster.max_hp
+        cat_monster.save()
