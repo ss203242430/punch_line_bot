@@ -1,5 +1,5 @@
 from applications.models import *
-import rand
+import random
 
 def npc_attack_cat_monster():
     if Damage_Statistics.objects.filter(source_type='npc', cat_monster_id=1).exists():
