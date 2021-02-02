@@ -1,4 +1,4 @@
-from linebot.models import *
+from applications.models import *
 import rand
 
 def npc_attack_cat_monster():
