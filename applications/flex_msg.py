@@ -196,6 +196,33 @@ def learn_punch_week_report_flex(user_id, weeks_ago):
     plt_message = ImageSendMessage(original_content_url=plt_img_url, preview_image_url=plt_img_url)
     return message, plt_message
 
+def key_word_flex(key_word_list):
+    content = {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": []
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": []
+          }
+        ],
+        "paddingAll": "0px"
+      }
+    }
+    for index, key_word in enumerate(key_word_list):
+        key_word_inner_content = key_word_flex_template(key_word)
+        content['body']['contents'][index % 2]['contents'].append(key_word_inner_content)
+    message = FlexSendMessage(alt_text='關鍵字', contents=content)
+    return message
+
 def get_week_start_end():
     tz = pytz.timezone('Asia/Taipei')
     today = datetime.date.today()
