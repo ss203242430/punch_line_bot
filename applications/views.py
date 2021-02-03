@@ -121,7 +121,7 @@ def callback(request):
                         ]
                         for custom_statement_type in custom_statement_types:
                             key_word_list.append(custom_statement_type[0])
-                        message.append(TextSendMessage(text=str(key_word_list)))
+                        message.append(key_word_flex(key_word_list))
 
                     if message:
                         line_bot_api.reply_message(event.reply_token, message)

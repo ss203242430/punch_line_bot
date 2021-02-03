@@ -355,3 +355,15 @@ def learn_punch_flex_template(title, description, total_time, clock_in_str, cloc
         ]
       }
     }
+
+def key_word_flex_template(key_word):
+    return {
+      "type": "button",
+      "style": "link",
+      "height": "sm",
+      "action": {
+        "type": "message",
+        "label": key_word,
+        "text": key_word
+      }
+    }
