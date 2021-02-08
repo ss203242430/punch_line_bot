@@ -262,7 +262,7 @@ def callback(request):
                                 if Learn_Punch.objects.filter(user_id=user.id).exists():
                                     mtext_split = mtext.split(',')
                                     if len(mtext_split) == 1:
-                                        msg, plt = learn_punch_week_report_flex(user.id, 1)
+                                        msg, plt = learn_punch_week_report_flex(user.id)
                                         message.append(msg)
                                         if plt:
                                             message.append(plt)
