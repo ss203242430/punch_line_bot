@@ -175,8 +175,8 @@ def learn_punch_report_flex(user_id, title=None):
     plt_message = ImageSendMessage(original_content_url=plt_img_url, preview_image_url=plt_img_url)
     return message, plt_message
 
-def learn_punch_week_report_flex(user_id, weeks_ago):
-    week_start, week_end = get_week_start_end()
+def learn_punch_week_report_flex(user_id, weeks_ago=None):
+    week_start, week_end = get_week_start_end(weeks_ago)
     learn_punch_list = Learn_Punch.objects.filter(user_id=user_id, clock_in__range=[week_start, week_end])
     if not learn_punch_list:
         response_msg = '查無打卡紀錄'
@@ -223,12 +223,15 @@ def key_word_flex(key_word_list):
     message = FlexSendMessage(alt_text='關鍵字', contents=content)
     return message
 
-def get_week_start_end():
+def get_week_start_end(weeks_ago=None):
     tz = pytz.timezone('Asia/Taipei')
     today = datetime.date.today()
     today = datetime.datetime.combine(today, datetime.datetime.min.time())
+    if weeks_ago:
+        today -= datetime.timedelta(days=7*weeks_ago)
     week_start = today - timedelta(days=today.weekday())
     week_start = week_start.astimezone(tz)
     week_end = today + timedelta(days=7 - today.weekday())
     week_end = week_end.astimezone(tz)
+    print(week_start, week_end)
     return week_start, week_end
